@@ -1,4 +1,8 @@
-import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { Form, Link, redirect } from "@remix-run/react";
 import { ChartAreaInteractive } from "~/components/chart-interactive";
 import { SectionCards } from "~/components/section-cards";
@@ -13,7 +17,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function action({ request }: ActionFunctionArgs) {
+/* export async function action({ request }: ActionFunctionArgs) {
   try {
     let session = await sessionStorage.getSession(
       request.headers.get("cookie")
@@ -29,6 +33,15 @@ export async function action({ request }: ActionFunctionArgs) {
 
     // Re-throw any other errors (including redirects)
     throw error;
+  }
+}
+ */
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  let session = await sessionStorage.getSession(request.headers.get("cookie"));
+  let user = session.get("user");
+  if (!user) {
+    return redirect("/login");
   }
 }
 
