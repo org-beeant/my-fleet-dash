@@ -7,10 +7,12 @@
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve ./build/server/index.js",
+    "start": "netlify serve",
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@netlify/functions": "^2.6.0",
+    "@netlify/remix-adapter": "^2.3.1",
     "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.0.1",
