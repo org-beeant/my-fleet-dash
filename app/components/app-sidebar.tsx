@@ -19,6 +19,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import { Link } from "@remix-run/react";
 
 // This is sample data.
 const data = {
@@ -29,7 +30,7 @@ const data = {
       items: [
         {
           title: "Validate - RC Number",
-          url: "#",
+          url: "/validate/rc",
         },
         {
           title: "Validate - Chassis Number",
@@ -71,8 +72,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <div className="flex flex-col gap-0.5 leading-none h-auto">
                 {/* <span className="text-xl font-bold">Aureole Soft-I</span>
                  */}
-                <img src="/logo-light.png" alt="logo" width="75" height="75" />
-                <span className="text-xs italic">beta</span>
+                <img src="/logo.jpeg" alt="logo" width="75" height="75" />
+                <span className="text-[9px] italic">beta</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -101,9 +102,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         {item.items.map((item) => (
                           <SidebarMenuSubItem key={item.title}>
                             <SidebarMenuSubButton asChild>
-                              <a href={item.url} className="text-[12px]">
+                              <Link to={item.url} className="text-[10.5px]">
                                 {item.title}
-                              </a>
+                              </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}

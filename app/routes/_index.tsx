@@ -43,6 +43,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!user) {
     return redirect("/login");
   }
+  return null;
 }
 
 export default function Index() {
