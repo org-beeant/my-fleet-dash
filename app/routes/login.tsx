@@ -128,7 +128,7 @@ export async function action({ request }: ActionFunctionArgs) {
 // Finally, we need to export a loader function to check if the user is already
 // authenticated and redirect them to the dashboard
 export async function loader({ request }: LoaderFunctionArgs) {
-  let session = await sessionStorage.getSession(request.headers.get("cookie"));
+  let session = await SessionStorage.getSession(request.headers.get("cookie"));
   let user = session.get("user");
 
   // If the user is already authenticated redirect to the dashboard
