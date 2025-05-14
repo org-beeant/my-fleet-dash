@@ -72,8 +72,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <div className="flex flex-col gap-0.5 leading-none h-auto">
                 {/* <span className="text-xl font-bold">Aureole Soft-I</span>
                  */}
-                <img src="/logo.jpeg" alt="logo" width="75" height="75" />
-                <span className="text-[9px] italic">beta</span>
+                <Link to="/">
+                  <img src="/logo.jpeg" alt="logo" width="75" height="75" />
+                  <span className="text-[9px] italic">beta</span>
+                </Link>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -102,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         {item.items.map((item) => (
                           <SidebarMenuSubItem key={item.title}>
                             <SidebarMenuSubButton asChild>
-                              <Link to={item.url} className="text-[10.5px]">
+                              <Link to={item.url} className="text-xs">
                                 {item.title}
                               </Link>
                             </SidebarMenuSubButton>

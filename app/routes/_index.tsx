@@ -1,14 +1,9 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
-import { Form, Link, redirect } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/react";
 import { ChartAreaInteractive } from "~/components/chart-interactive";
 import { SectionCards } from "~/components/section-cards";
-import { Button } from "~/components/ui/button";
 import { SidebarInset } from "~/components/ui/sidebar";
-import { sessionStorage } from "~/services/auth.server";
+import { SessionStorage } from "~/services/auth.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -38,7 +33,7 @@ export const meta: MetaFunction = () => {
  */
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  let session = await sessionStorage.getSession(request.headers.get("cookie"));
+  let session = await SessionStorage.getSession(request.headers.get("cookie"));
   let user = session.get("user");
   if (!user) {
     return redirect("/login");

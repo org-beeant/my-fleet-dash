@@ -1,13 +1,13 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { sessionStorage } from "~/services/auth.server";
+import { SessionStorage } from "~/services/auth.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   try {
-    let session = await sessionStorage.getSession(
+    let session = await SessionStorage.getSession(
       request.headers.get("cookie")
     );
     return redirect("/login", {
-      headers: { "Set-Cookie": await sessionStorage.destroySession(session) },
+      headers: { "Set-Cookie": await SessionStorage.destroySession(session) },
     });
   } catch (error) {
     // Return validation errors or authentication errors

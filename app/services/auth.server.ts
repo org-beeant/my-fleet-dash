@@ -11,7 +11,7 @@ type User = {
 };
 
 // Create a session storage
-const sessionStorage = createCookieSessionStorage({
+const SessionStorage = createCookieSessionStorage({
   cookie: {
     name: "__session",
     httpOnly: true,
@@ -59,4 +59,4 @@ authenticator.use(
   "user-pass"
 );
 
-export { authenticator, sessionStorage };
+export { authenticator, SessionStorage };

@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { authenticator, sessionStorage } from "~/services/auth.server";
+import { authenticator, SessionStorage } from "~/services/auth.server";
 
 // the names we are going to use in the strategy
 export default function Component() {
@@ -102,9 +102,7 @@ export async function action({ request }: ActionFunctionArgs) {
     // request object
     let user = await authenticator.authenticate("user-pass", request);
 
-    console.log(user);
-
-    let session = await sessionStorage.getSession(
+    let session = await SessionStorage.getSession(
       request.headers.get("cookie")
     );
 
@@ -113,7 +111,7 @@ export async function action({ request }: ActionFunctionArgs) {
     // Redirect to the home page after successful login
     return redirect("/", {
       headers: {
-        "Set-Cookie": await sessionStorage.commitSession(session),
+        "Set-Cookie": await SessionStorage.commitSession(session),
       },
     });
   } catch (error) {

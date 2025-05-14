@@ -13,10 +13,6 @@ import { Button } from "./ui/button";
 
 import { useToast } from "../hooks/use-toast";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Upload, X } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Form } from "@remix-run/react";
 import { Label } from "./ui/label";
 

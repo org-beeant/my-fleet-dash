@@ -1,5 +1,5 @@
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import { MyUpload } from "~/components/form-upload";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -11,6 +11,16 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { SessionStorage } from "~/services/auth.server";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  let session = await SessionStorage.getSession(request.headers.get("cookie"));
+  let user = session.get("user");
+  if (!user) {
+    return redirect("/login");
+  }
+  return null;
+}
 
 export default function ValidateRCNumber() {
   return (

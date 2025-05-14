@@ -4,6 +4,7 @@ import { PopoverGroup } from "@headlessui/react";
 
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import NavUser from "./nav-user";
+import { Link } from "@remix-run/react";
 
 const navigation = {
   categories: [
@@ -130,6 +131,7 @@ const navigation = {
     },
   ],
   pages: [
+    { name: "Home", href: "/" },
     { name: "Doc", href: "#" },
     { name: "Contact Us", href: "#" },
   ],
@@ -178,13 +180,13 @@ export default function MyNavBar() {
               <PopoverGroup className="lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
-                      href={page.href}
+                      to={page.href}
                       className="flex items-center text-sm font-medium text-white hover:text-black"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </PopoverGroup>
