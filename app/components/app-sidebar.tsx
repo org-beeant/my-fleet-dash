@@ -34,7 +34,7 @@ const data = {
         },
         {
           title: "Validate - Chassis Number",
-          url: "#",
+          url: "/validate/chassis",
         },
         {
           title: "Traffic Challan Check",
@@ -47,7 +47,7 @@ const data = {
       ],
     },
     {
-      title: "Personnal Management",
+      title: "Personnel Management",
       url: "#",
       items: [
         {
@@ -74,7 +74,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                  */}
                 <Link to="/">
                   <img src="/logo.jpeg" alt="logo" width="75" height="75" />
-                  <span className="text-[9px] italic">beta</span>
                 </Link>
               </div>
             </SidebarMenuButton>

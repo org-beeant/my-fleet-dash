@@ -1,29 +1,10 @@
 import {
-  CurrencyRupeeIcon,
-  DocumentCheckIcon,
-  DocumentCurrencyRupeeIcon,
-  DocumentIcon,
-} from "@heroicons/react/24/outline";
-import {
+  ActionFunction,
   ActionFunctionArgs,
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import clsx from "clsx";
-import dummyjson from "dummy-json";
-import {
-  IdCardIcon,
-  MapPin,
-  TimerIcon,
-  User2Icon,
-  XCircleIcon,
-} from "lucide-react";
-import { Suspense, useState } from "react";
-import { DataTableDemo } from "~/components/data-table";
-import RcResponse from "~/components/rc-response";
-import ResponseSkeleton from "~/components/response-skeleton";
-import { Badge } from "~/components/ui/badge";
+import { Form, useActionData } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -35,11 +16,28 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Skeleton } from "~/components/ui/skeleton";
-import { historyColumns } from "~/lib/columns";
-import { fetchHistoricalData } from "~/lib/data";
-import { History } from "~/lib/definitions";
 import { SessionStorage } from "~/services/auth.server";
+import dummyjson from "dummy-json";
+import {
+  CroissantIcon,
+  CrosshairIcon,
+  CrossIcon,
+  IdCardIcon,
+  LocateFixedIcon,
+  LocateIcon,
+  MapPin,
+  TimerIcon,
+  User2Icon,
+  XCircleIcon,
+} from "lucide-react";
+import { Badge } from "~/components/ui/badge";
+import clsx from "clsx";
+import {
+  CurrencyRupeeIcon,
+  DocumentCheckIcon,
+  DocumentCurrencyRupeeIcon,
+  DocumentIcon,
+} from "@heroicons/react/24/outline";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   let session = await SessionStorage.getSession(request.headers.get("cookie"));
@@ -47,11 +45,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!user) {
     return redirect("/login");
   }
-
-  const fetchHistory = await fetchHistoricalData(1, 5);
-  console.log("fetchHistory", fetchHistory);
-
-  return { data: fetchHistory.data, totalRows: fetchHistory.totalRows };
+  return null;
 }
 
 const template = `{
@@ -78,32 +72,29 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const result = dummyjson.parse(template);
 
-  return JSON.parse(result);
+  return result;
 }
 
 export default function ValidateRCNumber() {
   const data = useActionData<typeof action>();
-  const [loader, setLoader] = useState(false);
-  //const historydata = useLoaderData<History[], number>();
 
   return (
-    <div className="grid gap-4 p-4 sm:grid-cols-1 md:grid-cols-3">
-      <Card className="flex-1 h-[620px] md:col-span-1">
+    <div className="grid gap-4 p-4 sm:grid-cols-1 lg:grid-cols-2">
+      <Card className="flex-1 h-[620px]">
         <Form method="post">
           <CardHeader>
-            <CardTitle>Validate Through RC Number</CardTitle>
+            <CardTitle>Validate Through Chassis Number</CardTitle>
             <CardDescription className="truncate"></CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="rcnumber">RC Number</Label>
+                <Label htmlFor="rcnumber">Chassis Number</Label>
                 <Input
                   type="text"
                   id="rcnumber"
                   name="rcnumber"
-                  placeholder="RC Number"
-                  required
+                  placeholder="Chassis Number"
                 />
               </div>
             </div>
@@ -123,7 +114,7 @@ export default function ValidateRCNumber() {
           </CardFooter>
         </Form>
       </Card>
-      <Card className="flex-1 h-[620px] md:col-span-2">
+      <Card className="flex-1 h-[620px]">
         <CardHeader>
           <CardTitle>Status</CardTitle>
           <CardDescription className="truncate">
@@ -132,19 +123,10 @@ export default function ValidateRCNumber() {
         </CardHeader>
         <CardContent>
           <div className="rounded-lg p-2 min-h-[45px]">
-            <div className="overflow-x-auto">
-              <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                {data ? (
-                  <RcResponse data={data} />
-                ) : (
-                  <>
-                    Response will be shown here.. <ResponseSkeleton />
-                  </>
-                )}
-
-                {/*  
-                
-                <table className="min-w-full leading-normal">
+            {data ? (
+              <div className="overflow-x-auto">
+                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                  <table className="min-w-full leading-normal">
                     <thead>
                       <tr>
                         <th className="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -176,12 +158,12 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data && JSON.parse(data)?.RC_Valid === true,
+                                    JSON.parse(data).RC_Valid === true,
                                   "bg-red-600":
-                                    data && JSON.parse(data).RC_Valid === false,
+                                    JSON.parse(data).RC_Valid === false,
                                 })}
                               >
-                                {data && JSON.parse(data).RC_Valid
+                                {JSON.parse(data).RC_Valid
                                   ? "Valid"
                                   : "Invalid"}
                               </Badge>
@@ -209,12 +191,12 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data && JSON.parse(data).RC_Valid === true,
+                                    JSON.parse(data).RC_Valid === true,
                                   "bg-red-600":
-                                    data && JSON.parse(data).RC_Valid === false,
+                                    JSON.parse(data).RC_Valid === false,
                                 })}
                               >
-                                {data && JSON.parse(data).RC_Valid
+                                {JSON.parse(data).RC_Valid
                                   ? "Valid"
                                   : "Invalid"}
                               </Badge>
@@ -239,11 +221,12 @@ export default function ValidateRCNumber() {
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
                             <span className="relative">
-                              {data && JSON.parse(data).taxpaidupto}
+                              {JSON.parse(data).taxpaidupto}
                             </span>
                           </span>
                         </td>
                       </tr>
+                      {/** Insurance Validaity */}
                       <tr>
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <div className="flex items-center">
@@ -264,15 +247,13 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data &&
                                     JSON.parse(data).InsuranceValidity === true,
                                   "bg-red-600":
-                                    data &&
                                     JSON.parse(data).InsuranceValidity ===
-                                      false,
+                                    false,
                                 })}
                               >
-                                {data && JSON.parse(data).InsuranceValidity
+                                {JSON.parse(data).InsuranceValidity
                                   ? "Valid"
                                   : "Invalid"}
                               </Badge>
@@ -280,6 +261,7 @@ export default function ValidateRCNumber() {
                           </span>
                         </td>
                       </tr>
+                      {/** PUCC Certificate Validaity */}
                       <tr>
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <div className="flex items-center">
@@ -300,14 +282,12 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data &&
                                     JSON.parse(data).PUCC_Validity === true,
                                   "bg-red-600":
-                                    data &&
                                     JSON.parse(data).PUCC_Validity === false,
                                 })}
                               >
-                                {data && JSON.parse(data).PUCC_Validity
+                                {JSON.parse(data).PUCC_Validity
                                   ? "Valid"
                                   : "Invalid"}
                               </Badge>
@@ -315,6 +295,7 @@ export default function ValidateRCNumber() {
                           </span>
                         </td>
                       </tr>
+                      {/** Fincance Validaity */}
                       <tr>
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <div className="flex items-center">
@@ -333,7 +314,7 @@ export default function ValidateRCNumber() {
                           <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                             <span className="relative">
                               <Badge className="bg-gray-300 text-black">
-                                {data && JSON.parse(data).IsFinance
+                                {JSON.parse(data).IsFinance
                                   ? "Financed"
                                   : "Not Financed"}
                               </Badge>
@@ -361,14 +342,12 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data &&
                                     JSON.parse(data).Blacklisted === "No",
                                   "bg-red-600":
-                                    data &&
                                     JSON.parse(data).Blacklisted === "Yes",
                                 })}
                               >
-                                {data && JSON.parse(data).Blacklisted}
+                                {JSON.parse(data).Blacklisted}
                               </Badge>
                             </span>
                           </span>
@@ -391,7 +370,7 @@ export default function ValidateRCNumber() {
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
                             <span className="relative">
-                              {data && JSON.parse(data).Owner_Name}
+                              {JSON.parse(data).Owner_Name}
                             </span>
                           </span>
                         </td>
@@ -413,7 +392,7 @@ export default function ValidateRCNumber() {
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
                             <span className="relative">
-                              {data && JSON.parse(data).RegisteredAt}
+                              {JSON.parse(data).RegisteredAt}
                             </span>
                           </span>
                         </td>
@@ -438,14 +417,12 @@ export default function ValidateRCNumber() {
                               <Badge
                                 className={clsx({
                                   "bg-green-900":
-                                    data &&
                                     JSON.parse(data).Permit_Validity === true,
                                   "bg-red-600":
-                                    data &&
                                     JSON.parse(data).Permit_Validity === false,
                                 })}
                               >
-                                {data && JSON.parse(data).Permit_Validity
+                                {JSON.parse(data).Permit_Validity
                                   ? "Valid"
                                   : "Invalid"}
                               </Badge>
@@ -470,116 +447,22 @@ export default function ValidateRCNumber() {
                         <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
                           <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
                             <span className="relative">
-                              {data && JSON.parse(data).Permit_Valid_Upto}
+                              {JSON.parse(data).Permit_Valid_Upto}
                             </span>
                           </span>
                         </td>
                       </tr>
                     </tbody>
-                  </table> */}
+                  </table>
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="text-gray-700">Your Response will be shown here.</p>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex flex-col justify-center"></CardFooter>
       </Card>
-      {/*  <DataTableDemo /> */}
-      {/* <DataTableDemo data={historydata} columns={historyColumns} /> */}
-      <div className="md:col-span-3">
-        <div className="ml-2 mb-3">
-          <span className="text-medium font-bold">History</span>
-        </div>
-
-        <table className="min-w-full leading-normal">
-          <thead>
-            <tr>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Sno
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Date
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Validate RC Number
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Chassis Number
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Owner
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Registered At
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Remarks
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                1
-              </td>
-
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                15-May-2025 12:00 PM
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                MH11AZ8892
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                CHS123123XXX92323
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                ABC Logistics
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                Mumbai
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                Authorized to Enter
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs"></td>
-            </tr>
-            <tr>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                2
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                15-May-2025 14:00 PM
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                TN11AZ8893
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                CHS123123XXX92333
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                XYZ Logistics
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                Chennai
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                Authorized to Enter
-              </td>
-              <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {loader && (
-        <>
-          <div className="bg-gray-500/50 absolute size-full"></div>
-          <div className="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-            <span className="loader text-primary"></span>
-          </div>
-        </>
-      )}
     </div>
   );
 }
