@@ -32,36 +32,38 @@ import {
   TableRow,
 } from "./ui/table";
 
-export async function loader({ request }: LoaderFunctionArgs) {
+/* export async function loader({ request }: LoaderFunctionArgs) {
   const fetchHistory = await fetchHistoricalData(1, 5);
   console.log("fetchHistory", fetchHistory);
 
   return { data: fetchHistory.data, totalRows: fetchHistory.totalRows };
-}
+} */
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[];
   data: TData[];
+  totalRows: number;
 }
 
-export function DataTableDemo<TData, TValue>({
+export function DataTableHistory<TData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  totalRows,
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [historyData, setHistoryData] = React.useState<History[]>([]);
-  const [totalRows, setTotalRows] = React.useState<number>(0);
+  const [historyData, setHistoryData] = React.useState<TData[]>([]);
+  //const [totalRows, setTotalRows] = React.useState<number>(0);
   const [page, setPage] = React.useState<number>(1);
   const [size, setSize] = React.useState<number>(5);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const table = useReactTable({
-    data: data,
+  let table = useReactTable({
+    data: historyData.length > 0 ? historyData : data,
     columns: columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -79,7 +81,6 @@ export function DataTableDemo<TData, TValue>({
     },
   });
 
-  console.log("table", table.getRowModel().rows);
   /*  React.useEffect(() => {
     const fetchHistory = async () => {
       const fetchHistory = await fetchHistoricalData(page, size);
@@ -93,18 +94,18 @@ export function DataTableDemo<TData, TValue>({
   function handlePageChange(myPage: number) {
     setPage(myPage);
     const fetchHistory = async () => {
-      const fetchHistory = await fetchHistoricalData(page, size);
-      setHistoryData(fetchHistory.data);
+      const fetchHistory = await fetchHistoricalData(myPage, size);
+      setHistoryData(fetchHistory.data as TData[]);
     };
 
     fetchHistory();
   }
 
   return (
-    <div className="bg-gray dark:bg-gray-200 p-4 ">
-      <div className="w-full p-4 bg-white dark:bg-gray-200 rounded-lg shadow-md">
-        <h6 className="text-xl font-bold text-center pb-4">History</h6>
-        <div className="flex items-center py-4">
+    <div className="bg-card rounded-xl border p-1 md:col-span-3 shadow">
+      <div className="w-full p-4 bg-white rounded-lg">
+        <h6 className="text-xl font-bold pb-1 text-center">History</h6>
+        <div className="flex items-center py-2">
           {/* <Input
             placeholder="Filter jobid..."
             value={(table.getColumn("jobid")?.getFilterValue() as string) ?? ""}
@@ -142,7 +143,7 @@ export function DataTableDemo<TData, TValue>({
         </div>
         <div className="rounded-md border">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-gray-200 dark:bg-gray-300 text-xs">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -190,9 +191,9 @@ export function DataTableDemo<TData, TValue>({
             </TableBody>
           </Table>
         </div>
-        {/* <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex items-center justify-end space-x-2 py-4">
           <div className="flex-1 text-sm text-muted-foreground">
-            {page * size} of {data?.totalRows} row(s).
+            {page * size} of {totalRows} row(s).
           </div>
           <div className="space-x-2">
             <Button
@@ -207,12 +208,12 @@ export function DataTableDemo<TData, TValue>({
               variant="outline"
               size="sm"
               onClick={() => handlePageChange(page + 1)}
-              disabled={!(page * size <= data?.totalRows)}
+              disabled={!(page * size <= totalRows)}
             >
               Next
             </Button>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

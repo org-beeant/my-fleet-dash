@@ -35,7 +35,12 @@ export interface RCResultInterface {
 }
 
 export type History = {
-  jobid: string;
-  status: "Pending" | "Processing" | "Success" | "Failed";
-  date: string;
+  "SL #": string;
+  "Validated Date": string;
+  "Vehicle RC number": string;
+  "Chassis Number": string;
+  Owner: string;
+  "Registered at": string;
+  Status: string;
+  Remarks: string | null;
 };

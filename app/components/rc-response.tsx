@@ -6,19 +6,20 @@ import {
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import {
+  CheckCircle2,
+  CircleXIcon,
   IdCardIcon,
   MapPin,
   TimerIcon,
   User2Icon,
   XCircleIcon,
 } from "lucide-react";
-import { RCResult, RCResultInterface } from "~/lib/definitions";
+import { RCResultInterface } from "~/lib/definitions";
 import { Badge } from "./ui/badge";
 
 export default function RcResponse({ data }: RCResultInterface) {
-  console.log("RC Response Data", data);
   return (
-    <table className="min-w-full leading-normal">
+    <table className="min-w-full table-fixed">
       <thead>
         <tr>
           <th className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -31,7 +32,7 @@ export default function RcResponse({ data }: RCResultInterface) {
       </thead>
       <tbody>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <User2Icon className="size-5" />
@@ -42,14 +43,14 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
               <span className="relative">{data.Owner_Name}</span>
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <MapPin className="size-5" />
@@ -62,14 +63,14 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
               <span className="relative">{data.RegisteredAt}</span>
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <IdCardIcon className="size-5" />
@@ -82,23 +83,18 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.RC_Valid === true,
-                    "bg-red-600": data.RC_Valid === false,
-                  })}
-                >
-                  {data.RC_Valid ? "Valid" : "Invalid"}
-                </Badge>
-              </span>
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
+            <span className="relative inline-block px-3 font-semibold leading-tight">
+              {data.RC_Valid === true ? (
+                <CheckCircle2 className="size-7" color="white" fill="green" />
+              ) : (
+                <CircleXIcon className="size-7" color="white" fill="red" />
+              )}
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <DocumentCheckIcon className="size-5" />
@@ -111,23 +107,18 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.taxvalidity === true,
-                    "bg-red-600": data.taxvalidity === false,
-                  })}
-                >
-                  {data.taxvalidity === true ? "Valid" : "Invalid"}
-                </Badge>
-              </span>
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
+            <span className="relative inline-block px-3 font-semibold leading-tight">
+              {data.taxvalidity === true ? (
+                <CheckCircle2 className="size-7" color="white" fill="green" />
+              ) : (
+                <CircleXIcon className="size-7" color="white" fill="red" />
+              )}
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <TimerIcon className="size-5" />
@@ -140,7 +131,7 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
               <span className="relative">{data.taxpaidupto}</span>
             </span>
@@ -148,7 +139,7 @@ export default function RcResponse({ data }: RCResultInterface) {
         </tr>
         {/** Insurance Validaity */}
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <DocumentCurrencyRupeeIcon className="size-5" />
@@ -161,24 +152,19 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.InsuranceValidity === true,
-                    "bg-red-600": data.InsuranceValidity === false,
-                  })}
-                >
-                  {data.InsuranceValidity ? "Valid" : "Invalid"}
-                </Badge>
-              </span>
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
+            <span className="relative inline-block px-3 font-semibold leading-tight">
+              {data.InsuranceValidity ? (
+                <CheckCircle2 className="size-7" color="white" fill="green" />
+              ) : (
+                <CircleXIcon className="size-7" color="white" fill="red" />
+              )}
             </span>
           </td>
         </tr>
         {/** PUCC Certificate Validaity */}
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <DocumentIcon className="size-5" />
@@ -191,24 +177,19 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.PUCC_Validity === true,
-                    "bg-red-600": data.PUCC_Validity === false,
-                  })}
-                >
-                  {data.PUCC_Validity ? "Valid" : "Invalid"}
-                </Badge>
-              </span>
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
+            <span className="relative inline-block px-3 font-semibold leading-tight">
+              {data.PUCC_Validity === true ? (
+                <CheckCircle2 className="size-7" color="white" fill="green" />
+              ) : (
+                <CircleXIcon className="size-7" color="white" fill="red" />
+              )}
             </span>
           </td>
         </tr>
         {/** Fincance Validaity */}
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <CurrencyRupeeIcon className="size-5" />
@@ -221,7 +202,7 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
               <span className="relative">
                 <Badge className="bg-gray-300 text-black">
@@ -232,7 +213,7 @@ export default function RcResponse({ data }: RCResultInterface) {
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <XCircleIcon className="size-5" />
@@ -245,23 +226,21 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-            <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.Blacklisted === "No",
-                    "bg-red-600": data.Blacklisted === "Yes",
-                  })}
-                >
-                  {data.Blacklisted}
-                </Badge>
-              </span>
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
+            <span className="relative inline-block px-3 font-semibold leading-tight">
+              <Badge
+                className={clsx({
+                  "bg-gray-300 text-black": data.Blacklisted === "No",
+                  "bg-red-500": data.Blacklisted === "Yes",
+                })}
+              >
+                {data.Blacklisted === "Yes" ? "Yes" : "N/A"}
+              </Badge>
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <MapPin className="size-5" />
@@ -274,23 +253,18 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-              <span className="relative">
-                <Badge
-                  className={clsx({
-                    "bg-green-900": data.Permit_Validity === true,
-                    "bg-red-600": data.Permit_Validity === false,
-                  })}
-                >
-                  {data.Permit_Validity ? "Valid" : "Invalid"}
-                </Badge>
-              </span>
+              {data.Permit_Validity === true ? (
+                <CheckCircle2 className="size-7" color="white" fill="green" />
+              ) : (
+                <CircleXIcon className="size-7" color="white" fill="red" />
+              )}
             </span>
           </td>
         </tr>
         <tr>
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <div className="flex items-center">
               <div className="flex-shrink-0 w-5 h-5">
                 <TimerIcon className="size-5" />
@@ -303,7 +277,7 @@ export default function RcResponse({ data }: RCResultInterface) {
             </div>
           </td>
 
-          <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
+          <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
               <span className="relative">{data.Permit_Valid_Upto}</span>
             </span>

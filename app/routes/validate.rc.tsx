@@ -1,29 +1,14 @@
 import {
-  CurrencyRupeeIcon,
-  DocumentCheckIcon,
-  DocumentCurrencyRupeeIcon,
-  DocumentIcon,
-} from "@heroicons/react/24/outline";
-import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import clsx from "clsx";
 import dummyjson from "dummy-json";
-import {
-  IdCardIcon,
-  MapPin,
-  TimerIcon,
-  User2Icon,
-  XCircleIcon,
-} from "lucide-react";
-import { Suspense, useState } from "react";
-import { DataTableDemo } from "~/components/data-table";
+import { useState } from "react";
+import { DataTableHistory } from "~/components/history-data-table";
 import RcResponse from "~/components/rc-response";
 import ResponseSkeleton from "~/components/response-skeleton";
-import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -35,7 +20,6 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Skeleton } from "~/components/ui/skeleton";
 import { historyColumns } from "~/lib/columns";
 import { fetchHistoricalData } from "~/lib/data";
 import { History } from "~/lib/definitions";
@@ -51,11 +35,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const fetchHistory = await fetchHistoricalData(1, 5);
   console.log("fetchHistory", fetchHistory);
 
-  return { data: fetchHistory.data, totalRows: fetchHistory.totalRows };
+  return { historydata: fetchHistory.data, totalRows: fetchHistory.totalRows };
 }
 
 const template = `{
-  "Owner_Name": "{{firstName}}",
+  "Owner_Name": "{{random 'iThink logistics' 'Aegis Logistics Ltd' 'Allcargo Logistics Ltd' 'Apollo LogiSolutions Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd' 'Mahindra Logistics Ltd' 'Sical Logistics Ltd' 'TCI Express Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd'}}",
   "age": "{{int 18 65}}",
   "address": "{{int 1 100}} {{street}}",
   "city": "{{city}}",
@@ -66,7 +50,7 @@ const template = `{
   "PUCC_Validity": {{boolean}},
   "IsFinance": {{boolean}},
   "Blacklisted": "{{random 'Yes' 'No'}}",
-  "RegisteredAt": "{{random 'Salem' 'Chennai' 'Coimbatore' 'Madurai'  'Tirunelveli' 'Tirupur' 'Trichy'}}",
+  "RegisteredAt": "{{random 'Mumbai' 'Pune'}}",
   "Permit_Validity": {{boolean}},
   "Permit_Valid_Upto": "{{date '2025-01-01' '2029-12-31' 'YYYY-MM-DD'}}"
 }`;
@@ -84,11 +68,14 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function ValidateRCNumber() {
   const data = useActionData<typeof action>();
   const [loader, setLoader] = useState(false);
-  //const historydata = useLoaderData<History[], number>();
+  const { historydata, totalRows } = useLoaderData<{
+    historydata: History[];
+    totalRows: number;
+  }>();
 
   return (
     <div className="grid gap-4 p-4 sm:grid-cols-1 md:grid-cols-3">
-      <Card className="flex-1 h-[620px] md:col-span-1">
+      <Card className="flex-1 h-[550px] md:col-span-1">
         <Form method="post">
           <CardHeader>
             <CardTitle>Validate Through RC Number</CardTitle>
@@ -123,12 +110,9 @@ export default function ValidateRCNumber() {
           </CardFooter>
         </Form>
       </Card>
-      <Card className="flex-1 h-[620px] md:col-span-2">
+      <Card className="flex-1 h-[550px] md:col-span-2">
         <CardHeader>
           <CardTitle>Status</CardTitle>
-          <CardDescription className="truncate">
-            {/* Stauts of the upload process will be shown here. */}
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="rounded-lg p-2 min-h-[45px]">
@@ -138,345 +122,9 @@ export default function ValidateRCNumber() {
                   <RcResponse data={data} />
                 ) : (
                   <>
-                    Response will be shown here.. <ResponseSkeleton />
+                    <ResponseSkeleton />
                   </>
                 )}
-
-                {/*  
-                
-                <table className="min-w-full leading-normal">
-                    <thead>
-                      <tr>
-                        <th className="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Entities
-                        </th>
-                        <th className="px-3 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Status/Details
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <IdCardIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                RC Validity Status
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data && JSON.parse(data)?.RC_Valid === true,
-                                  "bg-red-600":
-                                    data && JSON.parse(data).RC_Valid === false,
-                                })}
-                              >
-                                {data && JSON.parse(data).RC_Valid
-                                  ? "Valid"
-                                  : "Invalid"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <DocumentCheckIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                TAX Validity Status
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data && JSON.parse(data).RC_Valid === true,
-                                  "bg-red-600":
-                                    data && JSON.parse(data).RC_Valid === false,
-                                })}
-                              >
-                                {data && JSON.parse(data).RC_Valid
-                                  ? "Valid"
-                                  : "Invalid"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <TimerIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                TAX Paid Upto
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span className="relative">
-                              {data && JSON.parse(data).taxpaidupto}
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <DocumentCurrencyRupeeIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Insurance Validity Status
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data &&
-                                    JSON.parse(data).InsuranceValidity === true,
-                                  "bg-red-600":
-                                    data &&
-                                    JSON.parse(data).InsuranceValidity ===
-                                      false,
-                                })}
-                              >
-                                {data && JSON.parse(data).InsuranceValidity
-                                  ? "Valid"
-                                  : "Invalid"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <DocumentIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                PUCC Certificate Validity Status
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data &&
-                                    JSON.parse(data).PUCC_Validity === true,
-                                  "bg-red-600":
-                                    data &&
-                                    JSON.parse(data).PUCC_Validity === false,
-                                })}
-                              >
-                                {data && JSON.parse(data).PUCC_Validity
-                                  ? "Valid"
-                                  : "Invalid"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <CurrencyRupeeIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Financed/Not Financed
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge className="bg-gray-300 text-black">
-                                {data && JSON.parse(data).IsFinance
-                                  ? "Financed"
-                                  : "Not Financed"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <XCircleIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Is Blacklisted
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data &&
-                                    JSON.parse(data).Blacklisted === "No",
-                                  "bg-red-600":
-                                    data &&
-                                    JSON.parse(data).Blacklisted === "Yes",
-                                })}
-                              >
-                                {data && JSON.parse(data).Blacklisted}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <User2Icon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Owner Name
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span className="relative">
-                              {data && JSON.parse(data).Owner_Name}
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <MapPin className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Registered At
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span className="relative">
-                              {data && JSON.parse(data).RegisteredAt}
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <MapPin className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Permit Validity Status
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span className="relative">
-                              <Badge
-                                className={clsx({
-                                  "bg-green-900":
-                                    data &&
-                                    JSON.parse(data).Permit_Validity === true,
-                                  "bg-red-600":
-                                    data &&
-                                    JSON.parse(data).Permit_Validity === false,
-                                })}
-                              >
-                                {data && JSON.parse(data).Permit_Validity
-                                  ? "Valid"
-                                  : "Invalid"}
-                              </Badge>
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 w-5 h-5">
-                              <TimerIcon className="size-5" />
-                            </div>
-                            <div className="ml-3">
-                              <p className="text-gray-900 whitespace-no-wrap">
-                                Permit Valid Upto
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-
-                        <td className="px-3 py-2 border-b border-gray-200 bg-white text-xs">
-                          <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-                            <span className="relative">
-                              {data && JSON.parse(data).Permit_Valid_Upto}
-                            </span>
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table> */}
               </div>
             </div>
           </div>
@@ -484,8 +132,12 @@ export default function ValidateRCNumber() {
         <CardFooter className="flex flex-col justify-center"></CardFooter>
       </Card>
       {/*  <DataTableDemo /> */}
-      {/* <DataTableDemo data={historydata} columns={historyColumns} /> */}
-      <div className="md:col-span-3">
+      <DataTableHistory
+        data={historydata}
+        columns={historyColumns}
+        totalRows={totalRows}
+      />
+      {/* <div className="md:col-span-3">
         <div className="ml-2 mb-3">
           <span className="text-medium font-bold">History</span>
         </div>
@@ -571,7 +223,7 @@ export default function ValidateRCNumber() {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
       {loader && (
         <>
           <div className="bg-gray-500/50 absolute size-full"></div>

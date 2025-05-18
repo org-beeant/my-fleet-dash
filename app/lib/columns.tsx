@@ -16,18 +16,64 @@ import { Badge } from "~/components/ui/badge";
 
 export const historyColumns: ColumnDef<History>[] = [
   {
-    accessorKey: "jobid",
-    header: "Job ID",
+    accessorKey: "SL #",
+    header: "SL #",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("jobid")}</div>
+      <div className="capitalize text-xs">{row.getValue("SL #")}</div>
     ),
   },
   {
-    accessorKey: "date",
-    header: "Submission Date",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("date")}</div>,
+    accessorKey: "Validated Date",
+    header: "Date",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Validated Date")}</div>
+    ),
   },
   {
+    accessorKey: "Vehicle RC number",
+    header: "Vehicle RC number",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">
+        {row.getValue("Vehicle RC number")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "Chassis Number",
+    header: "Chassis Number",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Chassis Number")}</div>
+    ),
+  },
+  {
+    accessorKey: "Owner",
+    header: "Owner",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Owner")}</div>
+    ),
+  },
+  {
+    accessorKey: "Registered at",
+    header: "Registered at",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Registered at")}</div>
+    ),
+  },
+  {
+    accessorKey: "Status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Status")}</div>
+    ),
+  },
+  {
+    accessorKey: "Remarks",
+    header: "Remarks",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">{row.getValue("Remarks")}</div>
+    ),
+  },
+  /* {
     accessorKey: "status",
     header: () => <div>Status</div>,
     cell: ({ row }) => {
@@ -45,8 +91,8 @@ export const historyColumns: ColumnDef<History>[] = [
         </div>
       );
     },
-  },
-  {
+  }, */
+  /* {
     id: "actions",
     header: () => <div>Options</div>,
     enableHiding: false,
@@ -87,5 +133,5 @@ export const historyColumns: ColumnDef<History>[] = [
         </DropdownMenu>
       );
     },
-  },
+  }, */
 ];
