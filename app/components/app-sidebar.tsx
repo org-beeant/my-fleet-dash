@@ -38,7 +38,7 @@ const data = {
         },
         {
           title: "Traffic Challan Check",
-          url: "#",
+          url: "/login2",
         },
         {
           title: "Fastag Check",

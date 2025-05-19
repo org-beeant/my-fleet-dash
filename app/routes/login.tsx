@@ -20,30 +20,6 @@ import { authenticator, SessionStorage } from "~/services/auth.server";
 export default function Component() {
   const data = useActionData<typeof action>();
   return (
-    /*  <div>
-      <h1>Login</h1>
-
-      <Form method="post">
-        <div>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" required />
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            autoComplete="current-password"
-            required
-          />
-        </div>
-
-        <button type="submit">Sign In</button>
-      </Form>
-    </div> */
-
     <div className="flex flex-col justify-center items-center h-screen bg-gray-200 dark:bg-white">
       <h6 className="text-xl font-bold text-center pb-7">
         <br /> Fleet Management

@@ -33,8 +33,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   const fetchHistory = await fetchHistoricalData(1, 5);
-  console.log("fetchHistory", fetchHistory);
-
   return { historydata: fetchHistory.data, totalRows: fetchHistory.totalRows };
 }
 
@@ -107,6 +105,10 @@ export default function ValidateRCNumber() {
                 Cancel
               </Button>
             </div>
+
+            <div className="flex flex-row justify-between items-center p-3 border bg-gray-300 rounded-lg mt-4 w-full h-[100px]">
+              {data ? (data.address ? data.address : "No Address") : ""}
+            </div>
           </CardFooter>
         </Form>
       </Card>
@@ -136,6 +138,7 @@ export default function ValidateRCNumber() {
         data={historydata}
         columns={historyColumns}
         totalRows={totalRows}
+        className="bg-card rounded-xl border p-1 md:col-span-3 shadow"
       />
       {/* <div className="md:col-span-3">
         <div className="ml-2 mb-3">

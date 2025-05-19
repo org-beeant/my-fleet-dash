@@ -13,9 +13,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
 
-import { LoaderFunctionArgs } from "@remix-run/node";
 import { fetchHistoricalData } from "~/lib/data";
-import { History } from "~/lib/definitions";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -32,23 +30,18 @@ import {
   TableRow,
 } from "./ui/table";
 
-/* export async function loader({ request }: LoaderFunctionArgs) {
-  const fetchHistory = await fetchHistoricalData(1, 5);
-  console.log("fetchHistory", fetchHistory);
-
-  return { data: fetchHistory.data, totalRows: fetchHistory.totalRows };
-} */
-
 interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   data: TData[];
   totalRows: number;
+  className?: string;
 }
 
 export function DataTableHistory<TData>({
   columns,
   data,
   totalRows,
+  className,
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -102,7 +95,7 @@ export function DataTableHistory<TData>({
   }
 
   return (
-    <div className="bg-card rounded-xl border p-1 md:col-span-3 shadow">
+    <div className={className}>
       <div className="w-full p-4 bg-white rounded-lg">
         <h6 className="text-xl font-bold pb-1 text-center">History</h6>
         <div className="flex items-center py-2">
@@ -143,7 +136,7 @@ export function DataTableHistory<TData>({
         </div>
         <div className="rounded-md border">
           <Table>
-            <TableHeader className="bg-gray-200 dark:bg-gray-300 text-xs">
+            <TableHeader className="bg-gray-200 dark:bg-gray-300 text-xs font-bold color-black-700">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
