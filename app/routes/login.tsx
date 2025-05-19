@@ -3,6 +3,7 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, redirect, useActionData, useLoaderData } from "@remix-run/react";
+import { BusFront, GalleryVerticalEnd, Truck, TruckIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -15,60 +16,6 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { authenticator, SessionStorage } from "~/services/auth.server";
-
-// the names we are going to use in the strategy
-export default function Component() {
-  const data = useActionData<typeof action>();
-  return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-200 dark:bg-white">
-      <h6 className="text-xl font-bold text-center pb-7">
-        <br /> Fleet Management
-        <br />
-        <span className="text-sm">by Aureole Soft-I </span>
-      </h6>
-      <Form method="post">
-        <Card className="w-[350px]">
-          <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>
-              Enter your email and password to login to your account.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="username">Username</Label>
-                <Input name="email" placeholder="Username" type="email" />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework">Password</Label>
-
-                <Input name="password" placeholder="password" type="password" />
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col justify-center">
-            <Button className="w-full" type="submit">
-              Login
-            </Button>
-            <div
-              className="flex h-8 items-end space-x-1"
-              aria-live="polite"
-              aria-atomic="true"
-            >
-              {data?.error && (
-                <>
-                  <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-                  <p className="text-sm text-red-500">{data?.error}</p>
-                </>
-              )}
-            </div>
-          </CardFooter>
-        </Card>
-      </Form>
-    </div>
-  );
-}
 
 // Second, we need to export an action function, here we will use the
 // `authenticator.authenticate` method
@@ -112,4 +59,89 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   // Otherwise return null to render the login page
   return null;
+}
+
+// the names we are going to use in the strategy
+export default function Login() {
+  const data = useActionData<typeof action>();
+  return (
+    <div className="grid min-h-svh lg:grid-cols-2">
+      <div className="relative hidden bg-muted lg:block">
+        <img
+          src="/collage.jpg"
+          alt="Image"
+          className="absolute   inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
+      </div>
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-xs">
+            <Form className="flex flex-col gap-6" method="post">
+              <div className="flex flex-col items-center gap-2 text-center">
+                {/*  <h1 className="text-2xl font-bold">Fleet Management System</h1> */}
+                <div className="flex h-8 items-end space-x-1">
+                  <BusFront
+                    className="h-8 w-8 text-mytheme"
+                    color="black"
+                    fill="green"
+                  />
+                  <h1 className="text-2xl font-bold">Fleet Management Login</h1>
+                </div>
+                <p className="text-balance text-sm text-muted-foreground">
+                  Enter your email below to login to your account
+                </p>
+              </div>
+              <div className="grid gap-6">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    name="email"
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Password</Label>
+                    {/* <a
+                      href="#"
+                      className="ml-auto text-sm underline-offset-4 hover:underline"
+                    >
+                      Forgot your password?
+                    </a> */}
+                  </div>
+                  <Input
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder="********"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full">
+                  Login
+                </Button>
+                <div className="flex items-center">
+                  {data?.error && (
+                    <>
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                      <span>&nbsp;</span>
+                      <p className="text-sm text-red-500">{data?.error}</p>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="text-center text-xs">
+                <p className="text-muted-foreground text-black-900 dark:text-white italic">
+                  Powered by Aureolesofti
+                </p>
+              </div>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

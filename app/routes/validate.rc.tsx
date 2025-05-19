@@ -39,7 +39,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 const template = `{
   "Owner_Name": "{{random 'iThink logistics' 'Aegis Logistics Ltd' 'Allcargo Logistics Ltd' 'Apollo LogiSolutions Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd' 'Mahindra Logistics Ltd' 'Sical Logistics Ltd' 'TCI Express Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd'}}",
   "age": "{{int 18 65}}",
-  "address": "{{int 1 100}} {{street}}",
+  "address": "{{random '101-201, CTS No-100, Village Malad, JN of S.V.Road & Shantilal Modi Road, S.V. Road, Kandiv ali (West) , Mumbai, Maharashtra, India - 400067' '502, 5th Floor, Skylon Co-op Housing Society Ltd, GIDC, Char Rasta, Vapi, Gujarat 396195' 'House, 54, Montieth Mansion, SBL, 28, Red Cross Rd, Egmore, Chennai, Tamil Nadu 600008'}}",
   "city": "{{city}}",
   "RC_Valid": {{boolean}},
   "taxvalidity": {{boolean}},
@@ -74,12 +74,12 @@ export default function ValidateRCNumber() {
   return (
     <div className="grid gap-4 p-4 sm:grid-cols-1 md:grid-cols-3">
       <Card className="flex-1 h-[550px] md:col-span-1">
-        <Form method="post">
-          <CardHeader>
-            <CardTitle>Validate Through RC Number</CardTitle>
-            <CardDescription className="truncate"></CardDescription>
-          </CardHeader>
-          <CardContent>
+        <CardHeader>
+          <CardTitle>Validate Through RC Number</CardTitle>
+          <CardDescription className="truncate"></CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form method="post" className="flex flex-col space-y-4">
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="rcnumber">RC Number</Label>
@@ -92,25 +92,35 @@ export default function ValidateRCNumber() {
                 />
               </div>
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col justify-center overflow-auto">
-            <div className="flex flex-row justify-between items-center gap-4">
-              <Button className="flex-1 bg-mytheme" type="submit">
+            <div className="flex flex-row justify-center items-center gap-3">
+              <Button className="bg-mytheme" type="submit">
                 Submit
               </Button>
               <Button
-                className="flex-1 bg-mytheme"
+                className="bg-mytheme"
                 onClick={() => window.location.reload()}
               >
                 Cancel
               </Button>
             </div>
-
-            <div className="flex flex-row justify-between items-center p-3 border bg-gray-300 rounded-lg mt-4 w-full h-[100px]">
-              {data ? (data.address ? data.address : "No Address") : ""}
+          </Form>
+        </CardContent>
+        <CardFooter className="flex flex-col justify-center overflow-auto">
+          {/* {data && (
+            <div className="flex flex-col p-3 border bg-gray-300 rounded-lg mt-4 w-full h-[150px]">
+              <div className="flex align-middle">
+                <p>Owner Name: </p>
+                <p className="text-xs">{data.Owner_Name}</p>
+              </div>
+              <div className="flex">
+                <p> Registed Address:</p>
+                <p className="text-xs">
+                  {data.address ? data.address : "No Addresss"}
+                </p>{" "}
+              </div>
             </div>
-          </CardFooter>
-        </Form>
+          )} */}
+        </CardFooter>
       </Card>
       <Card className="flex-1 h-[550px] md:col-span-2">
         <CardHeader>
