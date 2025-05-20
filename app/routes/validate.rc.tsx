@@ -5,6 +5,7 @@ import {
 } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import dummyjson from "dummy-json";
+import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { DataTableHistory } from "~/components/history-data-table";
 import RcResponse from "~/components/rc-response";
@@ -20,6 +21,7 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Separator } from "~/components/ui/separator";
 import { historyColumns } from "~/lib/columns";
 import { fetchHistoricalData } from "~/lib/data";
 import { History } from "~/lib/definitions";
@@ -39,7 +41,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 const template = `{
   "Owner_Name": "{{random 'iThink logistics' 'Aegis Logistics Ltd' 'Allcargo Logistics Ltd' 'Apollo LogiSolutions Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd' 'Mahindra Logistics Ltd' 'Sical Logistics Ltd' 'TCI Express Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd'}}",
   "age": "{{int 18 65}}",
-  "address": "{{random '101-201, CTS No-100, Village Malad, JN of S.V.Road & Shantilal Modi Road, S.V. Road, Kandiv ali (West) , Mumbai, Maharashtra, India - 400067' '502, 5th Floor, Skylon Co-op Housing Society Ltd, GIDC, Char Rasta, Vapi, Gujarat 396195' 'House, 54, Montieth Mansion, SBL, 28, Red Cross Rd, Egmore, Chennai, Tamil Nadu 600008'}}",
+  "address": "{{random '101-201, CTS No-100, Village Malad, JN of S.V.Road and Shantilal Modi Road, S.V. Road, Kandiv ali (West) , Mumbai, Maharashtra, India - 400067' '502, 5th Floor, Skylon Co-op Housing Society Ltd, GIDC, Char Rasta, Vapi, Gujarat 396195' 'House, 54, Montieth Mansion, SBL, 28, Red Cross Rd, Egmore, Chennai, Tamil Nadu 600008'}}",
   "city": "{{city}}",
   "RC_Valid": {{boolean}},
   "taxvalidity": {{boolean}},
@@ -83,16 +85,21 @@ export default function ValidateRCNumber() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="rcnumber">RC Number</Label>
-                <Input
-                  type="text"
-                  id="rcnumber"
-                  name="rcnumber"
-                  placeholder="RC Number"
-                  required
-                />
+                <div className="flex flex-row justify-between items-center gap-3">
+                  <Input
+                    type="text"
+                    id="rcnumber"
+                    name="rcnumber"
+                    placeholder="RC Number"
+                    required
+                  />
+                  <button type="submit">
+                    <SearchIcon className="h-5 w-5 cursor-pointer" />
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="flex flex-row justify-center items-center gap-3">
+            {/* <div className="flex flex-row justify-center items-center gap-3">
               <Button className="bg-mytheme" type="submit">
                 Submit
               </Button>
@@ -102,24 +109,41 @@ export default function ValidateRCNumber() {
               >
                 Cancel
               </Button>
-            </div>
+            </div> */}
           </Form>
         </CardContent>
-        <CardFooter className="flex flex-col justify-center overflow-auto">
-          {/* {data && (
-            <div className="flex flex-col p-3 border bg-gray-300 rounded-lg mt-4 w-full h-[150px]">
-              <div className="flex align-middle">
-                <p>Owner Name: </p>
-                <p className="text-xs">{data.Owner_Name}</p>
+        <CardFooter className="flex flex-col justify-center overflow-auto gap-2">
+          {data && (
+            <>
+              <Separator />
+              <div className="flex flex-col p-2 border bg-gray-300 rounded-lg mt-3 mb-3 w-full">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="px-3 py-2 w-1/4 text-sm font-semibold align-top">
+                        Owner:
+                      </td>
+                      <td className="px-3 py-2 text-xs w-3/4 italic">
+                        {data.Owner_Name}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 align-top text-sm font-semibold">
+                        Registed Address:
+                      </td>
+                      <td className="px-3 py-2 text-xs italic">
+                        {data.address}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div className="flex">
-                <p> Registed Address:</p>
-                <p className="text-xs">
-                  {data.address ? data.address : "No Addresss"}
-                </p>{" "}
+              <Separator />
+              <div className="flex flex-col p-2 border rounded-lg mt-3 w-full">
+                Approval form coming here...
               </div>
-            </div>
-          )} */}
+            </>
+          )}
         </CardFooter>
       </Card>
       <Card className="flex-1 h-[550px] md:col-span-2">
