@@ -3,7 +3,6 @@ import { historyData } from "./history";
 import { History } from "./definitions";
 
 export async function fetchHistoricalData(page: number = 1, size: number = 5) {
-  console.log("Fetching Historical data");
   //Calculate the starting and  ending index
   let startingIndex = (page - 1) * size;
   let endingIndex = startingIndex + 1 + size;

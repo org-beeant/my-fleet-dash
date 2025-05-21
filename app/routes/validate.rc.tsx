@@ -34,7 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return redirect("/login");
   }
 
-  const fetchHistory = await fetchHistoricalData(1, 5);
+  const fetchHistory = await fetchHistoricalData();
   return { historydata: fetchHistory.data, totalRows: fetchHistory.totalRows };
 }
 
@@ -45,14 +45,14 @@ const template = `{
   "city": "{{city}}",
   "RC_Valid": {{boolean}},
   "taxvalidity": {{boolean}},
-  "taxpaidupto": "{{date '2028-01-01' '2029-12-31' 'YYYY-MM-DD'}}",
+  "taxpaidupto": "{{date '2022-01-01' '2029-12-31' 'YYYY-MM-DD'}}",
   "InsuranceValidity": {{boolean}},
   "PUCC_Validity": {{boolean}},
   "IsFinance": {{boolean}},
   "Blacklisted": "{{random 'Yes' 'No'}}",
   "RegisteredAt": "{{random 'Mumbai' 'Pune'}}",
   "Permit_Validity": {{boolean}},
-  "Permit_Valid_Upto": "{{date '2025-01-01' '2029-12-31' 'YYYY-MM-DD'}}"
+  "Permit_Valid_Upto": "{{date '2022-01-01' '2029-12-31' 'YYYY-MM-DD'}}"
 }`;
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -139,8 +139,45 @@ export default function ValidateRCNumber() {
                 </table>
               </div>
               <Separator />
-              <div className="flex flex-col p-2 border rounded-lg mt-3 w-full">
-                Approval form coming here...
+              <div className="flex flex-col p-2 border rounded-lg mt-3 gap-5 w-full">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="px-3 py-2 w-2/3 text-sm font-semibold align-top">
+                        Valid Entities:
+                      </td>
+                      <td className="px-3 py-2 text-xs w-1/3 italic">
+                        {(data.RC_Valid ? 1 : 0) +
+                          (new Date(data.taxpaidupto) > new Date() ? 1 : 0) +
+                          (data.InsuranceValidity ? 1 : 0) +
+                          (data.puccvalidity ? 1 : 0) +
+                          (new Date(data.Permit_Valid_Upto) > new Date()
+                            ? 1
+                            : 0) +
+                          (data.blacklisted !== "Yes" ? 1 : 0)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-3 py-2 align-top text-sm font-semibold">
+                        Invalid Entities:
+                      </td>
+                      <td className="px-3 py-2 text-xs italic">
+                        {(!data.RC_Valid ? 1 : 0) +
+                          (new Date(data.taxpaidupto) < new Date() ? 1 : 0) +
+                          (!data.InsuranceValidity ? 1 : 0) +
+                          (!data.puccvalidity ? 1 : 0) +
+                          (new Date(data.Permit_Valid_Upto) < new Date()
+                            ? 1
+                            : 0) +
+                          (data.blacklisted === "Yes" ? 1 : 0)}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div className="flex flex-row justify-center items-center mb-2 gap-3">
+                  <Button className="bg-green-700 h-7">Approve</Button>
+                  <Button className="bg-red-900 h-7">Reject</Button>
+                </div>
               </div>
             </>
           )}

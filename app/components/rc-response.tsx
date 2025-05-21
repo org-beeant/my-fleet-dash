@@ -109,7 +109,7 @@ export default function RcResponse({ data }: RCResultInterface) {
 
           <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 font-semibold leading-tight">
-              {data.taxvalidity === true ? (
+              {new Date(data.taxpaidupto) > new Date() ? (
                 <CheckCircle2 className="size-7" color="white" fill="green" />
               ) : (
                 <CircleXIcon className="size-7" color="white" fill="red" />
@@ -255,7 +255,7 @@ export default function RcResponse({ data }: RCResultInterface) {
 
           <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
             <span className="relative inline-block px-3 py-1 font-semibold leading-tight">
-              {data.Permit_Validity === true ? (
+              {new Date(data.Permit_Valid_Upto) > new Date() ? (
                 <CheckCircle2 className="size-7" color="white" fill="green" />
               ) : (
                 <CircleXIcon className="size-7" color="white" fill="red" />
