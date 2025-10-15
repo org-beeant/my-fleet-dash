@@ -34,6 +34,32 @@ export interface RCResultInterface {
   };
 }
 
+export interface ChallanResultInterface {
+  data: {
+    Owner_Name: string;
+    address: string;
+    city: string;
+    totalChallans: number;
+    challan_last_3_months: number;
+    pendingChallanList: Array<{
+      date: string;
+      place: string;
+      name: string;
+      amount: number;
+      violator: string;
+      offence: Array<{ section: string; description: string }>;
+    }>;
+    disposedChallanList: Array<{
+      date: string;
+      place: string;
+      name: string;
+      amount: number;
+      violator: string;
+      offence: Array<{ section: string; description: string }>;
+    }>;
+  };
+}
+
 export type History = {
   "SL #": string;
   "Validated Date": string;

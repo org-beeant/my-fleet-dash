@@ -37,11 +37,15 @@ const data = {
           url: "/validate/chassis",
         },
         {
-          title: "Traffic Challan Check",
-          url: "/login2",
+          title: "Challan Check for Vehicle",
+          url: "/challan",
         },
         {
           title: "Fastag Check",
+          url: "#",
+        },
+        {
+          title: "Fastag History",
           url: "#",
         },
       ],
