@@ -212,8 +212,8 @@ export default function ChallanResponse({ data }: ChallanResultInterface) {
                           {challan.name}
                         </td>
                         <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
-                          <div className="flex items-center gap-1">
-                            <IndianRupee className="size-5" />
+                          <div className="flex items-center">
+                            <IndianRupee className="size-3" />
                             {challan.amount}
                           </div>
                         </td>
@@ -311,8 +311,10 @@ export default function ChallanResponse({ data }: ChallanResultInterface) {
                           {challan.name}
                         </td>
                         <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
-                          <ReceiptIndianRupee className="size-5" />
-                          {challan.amount}
+                          <div className="flex items-center">
+                            <IndianRupee className="size-3" />
+                            {challan.amount}
+                          </div>
                         </td>
                         <td className="px-3 py-1 border-b border-gray-200 bg-white text-xs">
                           {challan.violator}

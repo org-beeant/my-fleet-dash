@@ -200,3 +200,157 @@ export const historyData: any[] = [
     Remarks: null,
   },
 ];
+
+export const challanHistoryData: any[] = [
+  {
+    "SL #": 1,
+    "Checked Date": "2025-05-10 14:20:30",
+    "RC Number": "MH11AS1234",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 2,
+  },
+  {
+    "SL #": 2,
+    "Checked Date": "2025-05-10 14:25:30",
+    "RC Number": "MH11AS1235",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 1,
+  },
+  {
+    "SL #": 3,
+    "Checked Date": "2025-05-10 14:30:30",
+    "RC Number": "MH11AS1236",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 0,
+  },
+  {
+    "SL #": 4,
+    "Checked Date": "2025-05-10 14:35:30",
+    "RC Number": "MH11AS1237",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 0,
+  },
+  {
+    "SL #": 5,
+    "Checked Date": "2025-05-10 14:40:30",
+    "RC Number": "MH11AS1238",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 0,
+  },
+  {
+    "SL #": 6,
+    "Checked Date": "2025-05-10 14:45:30",
+    "RC Number": "MH11AS1239",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Challans": 0,
+  }
+];
+
+
+export const FCHistoryData: any[] = [
+  {
+    "SL #": 1,
+    "Checked Date": "2025-05-10 14:20:30",
+    "RC Number": "MH11AS1234",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 2,
+  },
+  {
+    "SL #": 2,
+    "Checked Date": "2025-05-10 14:25:30",
+    "RC Number": "MH11AS1235",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 1,
+  },
+  {
+    "SL #": 3,
+    "Checked Date": "2025-05-10 14:30:30",
+    "RC Number": "MH11AS1236",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 0,
+  },
+  {
+    "SL #": 4,
+    "Checked Date": "2025-05-10 14:35:30",
+    "RC Number": "MH11AS1237",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 4,
+  },
+  {
+    "SL #": 5,
+    "Checked Date": "2025-05-10 14:40:30",
+    "RC Number": "MH11AS1238",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 5,
+  },
+  {
+    "SL #": 6,
+    "Checked Date": "2025-05-10 14:45:30",
+    "RC Number": "MH11AS1239",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Tags Found": 0,
+  }
+];
+
+export const FHHistoryData: any[] = [
+  {
+    "SL #": 1,
+    "Checked Date": "2025-05-10 14:20:30",
+    "RC Number": "MH11AS1234",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 2,
+  },
+  {
+    "SL #": 2,
+    "Checked Date": "2025-05-10 14:25:30",
+    "RC Number": "MH11AS1235",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 1,
+  },
+  {
+    "SL #": 3,
+    "Checked Date": "2025-05-10 14:30:30",
+    "RC Number": "MH11AS1236",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 0,
+  },
+  {
+    "SL #": 4,
+    "Checked Date": "2025-05-10 14:35:30",
+    "RC Number": "MH11AS1237",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 4,
+  },
+  {
+    "SL #": 5,
+    "Checked Date": "2025-05-10 14:40:30",
+    "RC Number": "MH11AS1238",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 5,
+  },
+  {
+    "SL #": 6,
+    "Checked Date": "2025-05-10 14:45:30",
+    "RC Number": "MH11AS1239",
+    "Status": "Success",
+    "Error Message": null,
+    "Total Transactions Found": 0,
+  }
+];

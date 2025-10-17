@@ -1,9 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { History } from "./definitions";
+import { FCHistory } from "./definitions";
 
-export const historyColumns: ColumnDef<History>[] = [
+export const FCHistoryColumns: ColumnDef<FCHistory>[] = [
   {
     accessorKey: "SL #",
     header: "SL #",
@@ -12,40 +12,17 @@ export const historyColumns: ColumnDef<History>[] = [
     ),
   },
   {
-    accessorKey: "Validated Date",
+    accessorKey: "Checked Date",
     header: "Date",
     cell: ({ row }) => (
-      <div className="capitalize text-xs">{row.getValue("Validated Date")}</div>
+      <div className="capitalize text-xs">{row.getValue("Checked Date")}</div>
     ),
   },
   {
-    accessorKey: "Vehicle RC number",
-    header: "Vehicle RC number",
+    accessorKey: "RC Number",
+    header: "Vehicle RC Number",
     cell: ({ row }) => (
-      <div className="capitalize text-xs">
-        {row.getValue("Vehicle RC number")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "Chassis Number",
-    header: "Chassis Number",
-    cell: ({ row }) => (
-      <div className="capitalize text-xs">{row.getValue("Chassis Number")}</div>
-    ),
-  },
-  {
-    accessorKey: "Owner",
-    header: "Owner",
-    cell: ({ row }) => (
-      <div className="capitalize text-xs">{row.getValue("Owner")}</div>
-    ),
-  },
-  {
-    accessorKey: "Registered at",
-    header: "Registered at",
-    cell: ({ row }) => (
-      <div className="capitalize text-xs">{row.getValue("Registered at")}</div>
+      <div className="capitalize text-xs">{row.getValue("RC Number")}</div>
     ),
   },
   {
@@ -56,10 +33,19 @@ export const historyColumns: ColumnDef<History>[] = [
     ),
   },
   {
-    accessorKey: "Remarks",
-    header: "Remarks",
+    accessorKey: "Error Message",
+    header: "Error Message",
     cell: ({ row }) => (
-      <div className="capitalize text-xs">{row.getValue("Remarks")}</div>
+      <div className="capitalize text-xs">{row.getValue("Error Message")}</div>
+    ),
+  },
+  {
+    accessorKey: "Total Tags Found",
+    header: "Total No. of Tags Found",
+    cell: ({ row }) => (
+      <div className="capitalize text-xs">
+        {row.getValue("Total Tags Found")}
+      </div>
     ),
   },
   /* {

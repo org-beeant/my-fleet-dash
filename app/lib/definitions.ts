@@ -70,3 +70,30 @@ export type History = {
   Status: string;
   Remarks: string | null;
 };
+
+export type ChallanHistory = {
+  "SL #": string;
+  "Checked Date": string;
+  "RC Number": string;
+  "Status": string;
+  "Error Message": string | null;
+  "Total Challans": number;
+}
+
+export type FCHistory = {
+  "SL #": string;
+  "Checked Date": string;
+  "RC Number": string;
+  "Status": string;
+  "Error Message": string | null;
+  "Total Tags Found": number;
+}
+
+export type FHHistory = {
+  "SL #": string;
+  "Checked Date": string;
+  "RC Number": string;
+  "Status": string;
+  "Error Message": string | null;
+  "Total Transactions Found": number;
+}

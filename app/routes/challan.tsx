@@ -7,12 +7,9 @@ import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import dummyjson from "dummy-json";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
+import { ChallanDataTableHistory } from "~/components/challan-data-table";
 import ChallanResponse from "~/components/challan-response";
 import ChallanSkeleton from "~/components/challan-skeleton";
-import { DataTableHistory } from "~/components/history-data-table";
-import RcResponse from "~/components/rc-response";
-import ResponseSkeleton from "~/components/response-skeleton";
-import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -24,9 +21,9 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
-import { historyColumns } from "~/lib/columns";
-import { fetchHistoricalData } from "~/lib/data";
-import { History } from "~/lib/definitions";
+import { challanHistoryColumns } from "~/lib/challanColumns";
+import { fetchAllChallanHistoryData } from "~/lib/data";
+import { ChallanHistory } from "~/lib/definitions";
 import { SessionStorage } from "~/services/auth.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -36,7 +33,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     return redirect("/login");
   }
 
-  const fetchHistory = await fetchHistoricalData();
+  const fetchHistory = await fetchAllChallanHistoryData();
+  console.log("Challan History Data:", fetchHistory.data);
   return { historydata: fetchHistory.data, totalRows: fetchHistory.totalRows };
 }
 
@@ -100,7 +98,7 @@ export default function ValidateRCNumber() {
   const data = useActionData<typeof action>();
   const [loader, setLoader] = useState(false);
   const { historydata, totalRows } = useLoaderData<{
-    historydata: History[];
+    historydata: ChallanHistory[];
     totalRows: number;
   }>();
 
@@ -229,9 +227,9 @@ export default function ValidateRCNumber() {
         <CardFooter className="flex flex-col justify-center"></CardFooter>
       </Card>
       {/*  <DataTableDemo /> */}
-      <DataTableHistory
+      <ChallanDataTableHistory
         data={historydata}
-        columns={historyColumns}
+        columns={challanHistoryColumns}
         totalRows={totalRows}
         className="bg-card rounded-xl border p-1 md:col-span-3 shadow"
       />

@@ -42,11 +42,11 @@ const data = {
         },
         {
           title: "Fastag Check",
-          url: "#",
+          url: "/fastag/check",
         },
         {
           title: "Fastag History",
-          url: "#",
+          url: "/fastag/history",
         },
       ],
     },
