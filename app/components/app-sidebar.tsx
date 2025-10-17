@@ -56,7 +56,7 @@ const data = {
       items: [
         {
           title: "DL Validation of Driver",
-          url: "#",
+          url: "/validate/dl",
         },
       ],
     },

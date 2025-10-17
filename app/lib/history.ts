@@ -354,3 +354,60 @@ export const FHHistoryData: any[] = [
     "Total Transactions Found": 0,
   }
 ];
+
+export const DLHistoryData: any[] = [
+  {
+    "SL #": 1,
+    "Checked Date": "2025-05-10 14:20:30",
+    "DL Number": "MH11AS1234",
+    "DOB": "1990-01-01",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 2,
+  },
+  {
+    "SL #": 2,
+    "Checked Date": "2025-05-10 14:25:30",
+    "DL Number": "MH11AS1235",
+    "DOB": "1985-05-15",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 1,
+  },
+  {
+    "SL #": 3,
+    "Checked Date": "2025-05-10 14:30:30",
+    "DL Number": "MH11AS1236",
+    "DOB": "1978-09-20",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 0,
+  },
+  {
+    "SL #": 4,
+    "Checked Date": "2025-05-10 14:35:30",
+    "DL Number": "MH11AS1237",
+    "DOB": "1992-12-11",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 4,
+  },
+  {
+    "SL #": 5,
+    "Checked Date": "2025-05-10 14:40:30",
+    "DL Number": "MH11AS1238",
+    "DOB": "1988-07-07",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 5,
+  },
+  {
+    "SL #": 6,
+    "Checked Date": "2025-05-10 14:45:30",
+    "DL Number": "MH11AS1239",
+    "DOB": "1995-03-25",
+    "Status": "Success",
+    "Error Message": null,
+    "DL Validity Status": 0,
+  }
+];

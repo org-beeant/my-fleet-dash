@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { challanHistoryData, FCHistoryData, FHHistoryData, historyData } from "./history";
-import { ChallanHistory, FCHistory, FHHistory, History } from "./definitions";
+import { challanHistoryData, DLHistoryData, FCHistoryData, FHHistoryData, historyData } from "./history";
+import { ChallanHistory, DLHistory, FCHistory, FHHistory, History } from "./definitions";
 
 export async function fetchHistoricalData(page: number = 1, size: number = 5) {
   //Calculate the starting and  ending index
@@ -76,6 +76,26 @@ export async function fetchAllFHHistoryData(page: number = 1, size: number = 5) 
 
   return {
     totalRows: FHHistoryData.length,
+    data: returnResult,
+    page: page,
+    size: size,
+  }; // Return the sliced data and the total number of rows
+}
+
+export async function fetchAllDLHistoryData(page: number = 1, size: number = 5) {
+  //Calculate the starting and  ending index
+  let startingIndex = (page - 1) * size;
+  let endingIndex = startingIndex + 1 + size;
+
+  let slicedData = _.slice(DLHistoryData, startingIndex, endingIndex - 1);
+
+  //Plug the type
+  const returnResult: DLHistory[] = slicedData.map((item: any) => ({
+    ...item,
+  }));
+
+  return {
+    totalRows: DLHistoryData.length,
     data: returnResult,
     page: page,
     size: size,

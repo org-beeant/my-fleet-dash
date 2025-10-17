@@ -60,6 +60,28 @@ export interface ChallanResultInterface {
   };
 }
 
+export interface DLResultInterface {
+  data: {
+    Owner_Name: string;
+    address: string;
+    city: string;
+    DL_Valid: boolean;
+    DL_Number: string;
+    Issue_Date: string;
+    Expiry_Date: string;
+    vehicleList: Array<{
+      classOfVehicle: string;
+      code: string;
+      IssuedBy: string;
+      DateOfIssue: string;
+      VehicleCategory: string;
+      BadgeNumber: string;
+      BadgeIssuedBy: string;
+      BadgeDateOfIssue: string;
+    }>;
+  };
+}
+
 export type History = {
   "SL #": string;
   "Validated Date": string;
@@ -96,4 +118,14 @@ export type FHHistory = {
   "Status": string;
   "Error Message": string | null;
   "Total Transactions Found": number;
+}
+
+export type DLHistory = {
+  "SL #": string;
+  "Checked Date": string;
+  "DL Number": string;
+  "DOB": string;
+  "Status": string;
+  "Error Message": string | null;
+  "DL Validity Status": string;
 }
