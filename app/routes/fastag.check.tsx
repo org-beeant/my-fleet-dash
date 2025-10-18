@@ -10,6 +10,8 @@ import { useState } from "react";
 import ChallanResponse from "~/components/challan-response";
 import ChallanSkeleton from "~/components/challan-skeleton";
 import { FCDataTableHistory } from "~/components/FC-data-table";
+import FCResponse from "~/components/FC-response";
+import FCSkeleton from "~/components/FC-skeleton";
 import {
   Card,
   CardContent,
@@ -38,46 +40,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 const template = `{
-  "Owner_Name": "{{random 'iThink logistics' 'Aegis Logistics Ltd' 'Allcargo Logistics Ltd' 'Apollo LogiSolutions Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd' 'Mahindra Logistics Ltd' 'Sical Logistics Ltd' 'TCI Express Ltd' 'Container Corporation Of India Ltd' 'Gati Ltd'}}",
-  "address": "{{random '101-201, CTS No-100, Village Malad, JN of S.V.Road and Shantilal Modi Road, S.V. Road, Kandiv ali (West) , Mumbai, Maharashtra, India - 400067' '502, 5th Floor, Skylon Co-op Housing Society Ltd, GIDC, Char Rasta, Vapi, Gujarat 396195' 'House, 54, Montieth Mansion, SBL, 28, Red Cross Rd, Egmore, Chennai, Tamil Nadu 600008'}}",
-  "city": "{{city}}",
-  "totalChallans": "{{int 0 5}}",
-  "challan_last_3_months": "{{int 0 5}}",
-  "pendingChallanList": [
-    {{#repeat min=0 max=2}}
+  "tagsList": [
+     {{#repeat min=1 max=3}}
     {
-      "date": "{{date '2023-01-01' '2024-06-30' 'YYYY-MM-DD'}}",
-      "place": "{{city}}",
-      "name": "{{random 'John Doe' 'Jane Smith' 'Alice Johnson' 'Bob Brown' 'Charlie Davis'}}",
-      "amount": "{{int 100 5000}}",
-      "violator": "{{random 'Driver' 'Owner' 'Both'}}",
-      "offence": [
-        {{#repeat min=1 max=2}}
-        {
-          "section": "Section {{int 1 300}}",
-          "description": "{{random 'Speeding' 'Red Light Jumping' 'Illegal Parking' 'Drunk Driving' 'Overloading'}}"
-        }
-        {{/repeat}}
-      ]
-    }
-    {{/repeat}}
-  ],
-  "disposedChallanList": [
-     {{#repeat min=0 max=2}}
-    {
-      "date": "{{date '2023-01-01' '2024-06-30' 'YYYY-MM-DD'}}",
-      "place": "{{city}}",
-      "name": "{{random 'John Doe' 'Jane Smith' 'Alice Johnson' 'Bob Brown' 'Charlie Davis'}}",
-      "amount": "{{int 100 5000}}",
-      "violator": "{{random 'Driver' 'Owner' 'Both'}}",
-      "offence": [
-        {{#repeat min=1 max=2}}
-        {
-          "section": "Section {{int 1 300}}",
-          "description": "{{random 'Speeding' 'Red Light Jumping' 'Illegal Parking' 'Drunk Driving' 'Overloading'}}"
-        }
-        {{/repeat}}
-      ]
+      "TAG_ID": "TAG{{int 100000 999999}}",
+      "TID": "TID{{int 100000 999999}}",
+      "VEHICLE_CLASS": "{{random 'Car' 'Truck' 'Bus' 'Bike'}}",
+      "TAG_STATUS": "{{random 'Active' 'Inactive' 'Blocked'}}",
+      "ISSUE_DATE": "{{date '2020-01-01' '2022-12-31' 'YYYY-MM-DD'}}",
+      "EXCC_CODE": "EXCC{{int 100 999}}",
+      "BANKID": "BANK{{int 100 999}}",
+      "COMVEHICLE": "MH{{int 10 99}}AZ{{int 1000 9999}}"
     }
     {{/repeat}}
   ]
@@ -89,6 +62,7 @@ export async function action({ request }: ActionFunctionArgs) {
   //Process the rcnumber here
 
   const result = dummyjson.parse(template);
+  console.log("FC Result:", result);
 
   return JSON.parse(result);
 }
@@ -213,10 +187,10 @@ export default function ValidateRCNumber() {
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                 {data ? (
-                  <ChallanResponse data={data} />
+                  <FCResponse data={data} />
                 ) : (
                   <>
-                    <ChallanSkeleton />
+                    <FCSkeleton />
                   </>
                 )}
               </div>

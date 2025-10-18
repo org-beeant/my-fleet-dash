@@ -34,6 +34,34 @@ export interface RCResultInterface {
   };
 }
 
+export interface FCResultInterface {
+  data: {
+    tagsList: Array<{
+      TAG_ID: string;
+      TID: string;
+      VEHICLE_CLASS : string;
+      TAG_STATUS: number;
+      ISSUE_DATE: string;
+      EXCC_CODE: string;
+      BANKID: string;
+      COMVEHICLE: string;
+    }>;
+  };
+}
+
+export interface FHResultInterface {
+  data: {
+    transList: Array<{
+      datetime: string;
+      laneDirection: string;
+      tollPlazaGeoCode: string;
+      tollPlazaName: string;
+      vehicleType: string;
+      vehicleRegNo: string
+    }>;
+  };
+}
+
 export interface ChallanResultInterface {
   data: {
     Owner_Name: string;
